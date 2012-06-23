@@ -10,9 +10,11 @@ DallasTemperature sensors(&oneWire);
 const float TARGET_TEMP = 30.0;
 const int RELAY_PIN = 13;
 const float DELTA = 0.1;
+const int WARM_TIME = 1;
 const int ON = 1;
 const int OFF = 0;
 int state = OFF;
+int startWarming = 0;
 
 void setup() {
   lcd.begin(20, 4);
@@ -38,20 +40,20 @@ void loop() {
   lcd.print(temp);
   
   // decide wether we nee to warm more
-  if (state == ON) {
-   if (temp > (TARGET_TEMP + DELTA)) {
+  if ((state == ON)
+      && ((startWarming + WARM_TIME) < millis()/1000)) {
     digitalWrite(RELAY_PIN, LOW);
     state = OFF;
     lcd.setCursor(17, 2);
     lcd.print("OFF");
-   }     
-  } else {
-   if (temp < (TARGET_TEMP - DELTA)) {
+  } 
+  if ((state == OFF)
+      && (temp < (TARGET_TEMP - DELTA))) {
     digitalWrite(RELAY_PIN, HIGH);
+    startWarming = millis()/1000;
     state = ON;
     lcd.setCursor(17, 2);
     lcd.print(" ON");
-   }     
   }
 
 }
