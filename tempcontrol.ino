@@ -3,7 +3,8 @@
 #include <LiquidCrystal.h>
 
 #define DEFAULT_TEMP 64.0
-#define TEMP_STEP 0.5
+#define TEMPERATURE_PRECISION 10
+#define TEMP_STEP 1.0
 #define RELAY_PIN 2
 #define TEMP_PIN 3
 #define DELTA 0.1
@@ -80,6 +81,7 @@ void setup() {
   lcd.setCursor(0, 0);
   lcd.print("target   current"); // print a simple message
   sensors.begin();
+  sensors.setResolution(TEMPERATURE_PRECISION);
   pinMode(RELAY_PIN, OUTPUT);
   digitalWrite(RELAY_PIN, LOW);
 }
@@ -88,7 +90,7 @@ void loop() {
   int lcdKey = readLCDButtons();  // read the buttons
   sensors.requestTemperatures();
   float currentTemp = sensors.getTempCByIndex(0);
-  
+
   updateTargetTemp(lcdKey);
 
   // decide wether we nee to warm more
