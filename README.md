@@ -8,3 +8,7 @@ relay (see schema). This allows to keep temperature of the chemicals at
 
 ![Schema](arduino-temperature-control/raw/master/sketch_photo_dev_bb.png "Schema")
 
+
+
+[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/gehel/arduino-temperature-control/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
+
